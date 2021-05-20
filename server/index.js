@@ -7,7 +7,7 @@ const app = express()
 const router = require('./router')
 const mongoose=require('mongoose')
 
-mongoose.createConnect('mongodb://localhost:auth/auth')
+mongoose.connect('mongodb://localhost:auth/auth', { useNewUrlParser: true}, () => console.log('mongo connected'))
 
 //App setup
 app.use(morgan('combined'))
