@@ -5,12 +5,14 @@ const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 
 //setup option for jwt strategy
-const jwtOptions = {}
+    const opts = {}
+    opts.jwtFromRequest= ExtractJwt.fromHeader('authorization'),
+    opts.secretOrKey= config.secretOrKey
 
 
 //strategy
-const jwtLogin = new JwtStrategy(jwtOptions,function (payload, done){
-    User.findById(payload.subdomains, function(err, user){
+const jwtLogin = new JwtStrategy(opts,function (payload, done){
+    User.findById(payload.sub, function(err, user){
         // error when search failed to occur
         if(err) { return done(err, false) }
 
@@ -22,3 +24,4 @@ const jwtLogin = new JwtStrategy(jwtOptions,function (payload, done){
         }
     })
 })
+passport.use(jwtLogin)
