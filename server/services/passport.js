@@ -29,7 +29,7 @@ const localLogin = new LocalStrategy(localOptions , function(email,password,done
 
 //strategy
 const jwtLogin = new JwtStrategy(jwtOptions,function (jwt_payload, done){
-    User.findById(jwt_ayload.sub, function(err, user){
+    User.findById(jwt_payload.sub, function(err, user){
         // error when search failed to occur
         if(err) return done(err, false) 
 
