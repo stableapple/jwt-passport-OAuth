@@ -3,9 +3,13 @@ const keys = require('../config/keys')
 const User = require('../models/user')
 
 
+
 function tokenForUser(user) {
     const timestamp = new Date().getTime();
-    return jwt.encode({ sub: user.id, iat: timestamp }, user.id);
+    return jwt.encode({ sub: user.id, iat: timestamp }, keys.secretOrKey);
+}
+exports.signin = function(req,res,next) {
+    res.send({ token: tokenForUser(req.user)})
 }
 exports.signup = function(req,res,next) {
     const email = req.body.email;
